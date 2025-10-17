@@ -1,0 +1,115 @@
+{
+  "name": "Auto Centile Calculator",
+  "namespace": "Research FIRST\\AutoCentileModuleUK",
+  "description": "Automatically calculates UK-WHO growth centiles and populates centile fields",
+  "authors": [
+    {
+      "name": "Nadege Haouidji-Javaux",
+      "email": "n.c.haouidji-javaux@bham.ac.uk",
+      "institution": "Research FIRST - University of Birmingham - Birmingham Health Partners"
+    }
+  ],
+  "framework-version": 8,
+  "compatibility": {
+    "php-version-min": "7.4",
+    "redcap-version-min": "12.0.0"
+  },
+  "permissions": [
+    "redcap_data_entry_form"
+  ],
+  "system-settings": [
+    {
+      "key": "rcpch_api_key",
+      "name": "RCPCH API Key (Optional)",
+      "type": "text",
+      "required": false
+    }
+  ],
+  "project-settings": [
+    {
+      "key": "target_instruments",
+      "name": "Target Forms (comma-separated)",
+      "type": "text",
+      "default": "measurements",
+      "required": true
+    },
+    {
+      "key": "dob_field",
+      "name": "Date of Birth Field",
+      "type": "field-list",
+      "required": true
+    },
+    {
+      "key": "sex_field",
+      "name": "Sex Field (1=Male, 2=Female)",
+      "type": "field-list",
+      "required": true
+    },
+    {
+      "key": "measurement_date_field",
+      "name": "Measurement Date Field",
+      "type": "field-list",
+      "required": true
+    },
+    {
+      "key": "weight_field",
+      "name": "Weight Field (kg)",
+      "type": "field-list",
+      "required": true
+    },
+    {
+      "key": "height_field",
+      "name": "Height Field (cm)",
+      "type": "field-list",
+      "required": true
+    },
+    {
+      "key": "weight_centile_field",
+      "name": "Weight Centile Field (auto-populated)",
+      "type": "field-list",
+      "required": false
+    },
+    {
+      "key": "height_centile_field",
+      "name": "Height Centile Field (auto-populated)",
+      "type": "field-list",
+      "required": false
+    },
+    {
+      "key": "bmi_centile_field",
+      "name": "BMI Centile Field (auto-populated)",
+      "type": "field-list",
+      "required": false
+    },
+    {
+      "key": "weight_sds_field",
+      "name": "Weight SDS Field (auto-populated)",
+      "type": "field-list",
+      "required": false
+    },
+    {
+      "key": "height_sds_field",
+      "name": "Height SDS Field (auto-populated)",
+      "type": "field-list",
+      "required": false
+    },
+    {
+      "key": "bmi_sds_field",
+      "name": "BMI SDS Field (auto-populated)",
+      "type": "field-list",
+      "required": false
+    },
+    {
+      "key": "gestation_weeks_field",
+      "name": "Gestation Weeks Field (optional)",
+      "type": "field-list",
+      "required": false
+    },
+    {
+      "key": "gestation_days_field",
+      "name": "Gestation Days Field (optional)",
+      "type": "field-list",
+      "required": false
+    }
+  ]
+}
