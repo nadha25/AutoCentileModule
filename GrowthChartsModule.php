@@ -1,10 +1,10 @@
 <?php
 /**
  * Auto Centile Calculator
- * Automatically calculates and displays centiles when measurements are entered
+ * Automatically calculates and populates centile fields
  */
 
-namespace ResearchFIRST\AutoCentileModuleUK;
+namespace YourInstitution\AutoCentileModule;
 
 use ExternalModules\AbstractExternalModule;
 
@@ -141,10 +141,10 @@ class AutoCentileModule extends AbstractExternalModule {
                 }
             }
 
-          function scheduleCalculation() {
+            function scheduleCalculation() {
                 clearTimeout(calculateTimeout);
-                calculateTimeout = setTimeout(autoCalculateCentiles, 0);
-            }   
+                calculateTimeout = setTimeout(autoCalculateCentiles, 1000);
+            }
 
             $(document).ready(function() {
                 const watchFields = [
@@ -159,113 +159,6 @@ class AutoCentileModule extends AbstractExternalModule {
 
                 $(`input[name="${fieldNames.sex}"]`).on('change', scheduleCalculation);
 
-                setTimeout(autoCalculateCentiles, 500);
-            });
-        </script>
-        <?php
-    }
-}
-                // Insert after the field's container
-                const container = field.closest('td') || field.parentElement;
-                container.appendChild(display);
-            }
-
-            async function autoCalculateCentiles() {
-                const weight = getFieldValue(fieldNames.weight);
-                const height = getFieldValue(fieldNames.height);
-                const dob = getFieldValue(fieldNames.dob);
-                const sex = getRadioValue(fieldNames.sex);
-                const measurementDate = getFieldValue(fieldNames.measurementDate);
-
-                // Check if we have minimum required fields
-                if (!dob || !sex || !measurementDate) return;
-                if (!weight && !height) return;
-
-                
-                try {
-                    const formData = {
-                        birth_date: dob,
-                        measurement_date: measurementDate,
-                        weight: weight,
-                        height: height,
-                        sex: sex,
-                        gestation_weeks: getFieldValue(fieldNames.gestationWeeks),
-                        gestation_days: getFieldValue(fieldNames.gestationDays),
-                        measurement_method: 'height'
-                    };
-
-                    const response = await fetch('<?php echo $this->getUrl('ajax/calculate_centiles.php'); ?>', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(formData)
-                    });
-
-                    if (!response.ok) {
-                        throw new Error('Calculation failed');
-                    }
-
-                    const data = await response.json();
-
-                    if (!data.success) {
-                        throw new Error(data.error || 'Unknown error');
-                    }
-
-                    const results = data.results;
-
-                    // Display and save weight centile
-                    if (results.weight && !results.weight.error) {
-                        const centile = Math.round(results.weight.centile * 10) / 10;
-                        const sds = Math.round(results.weight.sds * 100) / 100;
-                        showCentileNext(fieldNames.weight, `${centile}th centile (SDS: ${sds})`);
-                        setFieldValue(fieldNames.weightCentile, centile);
-                    } else if (results.weight?.error) {
-                        showCentileNext(fieldNames.weight,  results.weight.error, true);
-                    }
-
-                    // Display and save height centile
-                    if (results.height && !results.height.error) {
-                        const centile = Math.round(results.height.centile * 10) / 10;
-                        const sds = Math.round(results.height.sds * 100) / 100;
-                        showCentileNext(fieldNames.height, `${centile}th centile (SDS: ${sds})`);
-                        setFieldValue(fieldNames.heightCentile, centile);
-                    } else if (results.height?.error) {
-                        showCentileNext(fieldNames.height,  results.height.error, true);
-                    }
-
-                    // Display and save BMI centile
-                    if (results.bmi && !results.bmi.error) {
-                        const centile = Math.round(results.bmi.centile * 10) / 10;
-                        const sds = Math.round(results.bmi.sds * 100) / 100;
-                        setFieldValue(fieldNames.bmiCentile, centile);
-                        
-                       
-                    }
-
-                } catch (error) {
-                    console.error('Centile calculation error:', error);
-                    if (weight) showCentileNext(fieldNames.weight, '', true);
-                    if (height) showCentileNext(fieldNames.height, '', true);
-                }
-            }
-
-            
-
-            $(document).ready(function() {
-                // Watch for changes on relevant fields
-                const watchFields = [
-                    fieldNames.weight,
-                    fieldNames.height,
-                    fieldNames.measurementDate
-                ];
-
-                watchFields.forEach(fieldName => {
-                    $(`[name="${fieldName}"]`).on('change blur', scheduleCalculation);
-                });
-
-                // Watch for sex radio button changes
-                $(`input[name="${fieldNames.sex}"]`).on('change', scheduleCalculation);
-
-                // Auto-calculate on page load if values exist
                 setTimeout(autoCalculateCentiles, 500);
             });
         </script>
