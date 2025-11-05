@@ -9,10 +9,10 @@
       "institution": "Research FIRST - University of Birmingham - Birmingham Health Partners"
     }
   ],
-  "framework-version": 8,
+  "framework-version": 15,
   "compatibility": {
-    "php-version-min": "7.4",
-    "redcap-version-min": "12.0.0"
+    "php-version-min": "8.0",
+    "redcap-version-min": "14.0.0"
   },
   "permissions": [
     "redcap_data_entry_form"
