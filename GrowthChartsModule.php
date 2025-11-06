@@ -4,7 +4,7 @@
  * Automatically calculates and populates centile fields
  */
 
-namespace YourInstitution\AutoCentileModule;
+namespace ResearchFIRST\AutoCentileModule;
 
 use ExternalModules\AbstractExternalModule;
 
