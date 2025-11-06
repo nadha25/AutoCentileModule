@@ -331,23 +331,24 @@ class AutoCentileModule extends AbstractExternalModule {
      * Get validation type for a field from data dictionary
      * @param string $fieldName
      * @return string|null Returns validation type (e.g., 'date_dmy', 'date_mdy', 'date_ymd') or null
-     */
-    private function getFieldValidationType($fieldName) {
-        if (empty($fieldName)) {
-            return null;
-        }
-        
-        try {
-            // Get data dictionary for current project
-            $dataDictionary = \REDCap::getDataDictionary('array');
-            
-            if (isset($dataDictionary[$fieldName]['text_validation_type_or_show_slider_number'])) {
-                return $dataDictionary[$fieldName]['text_validation_type_or_show_slider_number'];
-            }
-        } catch (\Exception $e) {
-            error_log('Auto Centile Module: Error getting validation type for field ' . $fieldName . ': ' . $e->getMessage());
-        }
-        
+     */private function getFieldValidationType($fieldName) {
+    if (empty($fieldName)) {
         return null;
     }
+    
+    try {
+        $dataDictionary = [];
+        if (method_exists('\REDCap', 'getDataDictionary')){
+            // Get data dictionary for current project
+            $dataDictionary = \REDCap::getDataDictionary('array');
+        }
+        
+        if (isset($dataDictionary[$fieldName]['text_validation_type_or_show_slider_number'])) {
+            return $dataDictionary[$fieldName]['text_validation_type_or_show_slider_number'];
+        }
+    } catch (\Exception $e) {
+        error_log('Auto Centile Module: Error getting validation type for field ' . $fieldName . ': ' . $e->getMessage());
+    }
+    
+    return null;
 }
