@@ -61,7 +61,7 @@ class AutoCentileModule extends AbstractExternalModule {
         $measurementDateValidation = $this->getFieldValidationType($measurementDateField);
         
         // Get AJAX endpoint URL
-        $ajaxUrl = $this->getUrl('ajax/calculate_centiles.php');
+       $ajaxUrl = $this->getUrl('ajax/calculate_centiles.php', true, true);
         
         ?>
         <script>
