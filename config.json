@@ -2,6 +2,12 @@
   "name": "Auto Centile Calculator",
   "namespace": "ResearchFIRST\\AutoCentileModule",
   "description": "Automatically calculates UK-WHO growth centiles and populates centile fields",
+  "documentation": "README.md",
+  "versions": [
+    {
+      "version": "1.0.0"
+    }
+  ],
   "authors": [
     {
       "name": "Nadege Haouidji-Javaux",
@@ -9,10 +15,10 @@
       "institution": "Research FIRST - University of Birmingham - Birmingham Health Partners"
     }
   ],
-  "framework-version": 15,
+  "framework-version": 14,
   "compatibility": {
     "php-version-min": "8.0",
-    "redcap-version-min": "14.0.0"
+    "redcap-version-min": "13.0.0"
   },
   "permissions": [
     "redcap_data_entry_form"
@@ -55,13 +61,13 @@
       "key": "weight_field",
       "name": "Weight Field (kg)",
       "type": "field-list",
-      "required": true
+      "required": false
     },
     {
       "key": "height_field",
       "name": "Height Field (cm)",
       "type": "field-list",
-      "required": true
+      "required": false
     },
     {
       "key": "weight_centile_field",
